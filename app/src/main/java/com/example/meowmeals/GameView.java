@@ -108,7 +108,7 @@ public class GameView extends View {
     }
 
     protected void update () {
-        if (points>pointsmax) {pointsmax=points;}
+        if (points>=pointsmax) {pointsmax=points;}
         image_cat.update(timerInterval);
         img_fish.update(timerInterval);
         invalidate();
