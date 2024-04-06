@@ -35,43 +35,22 @@ public class GameView extends View {
         viewHeight = h;
     }
 
-    private Bitmap image1 = BitmapFactory.decodeResource(getResources(), R.drawable.img_fon); // фон
-    int fonW = image1.getWidth()/2+200;
-    int fonH = image1.getHeight()/2;
-//    Rect image_fon = new Rect(0,0,fonW,fonH);
-
-
-
-    private Bitmap image_hp = BitmapFactory.decodeResource(getResources(), R.drawable.img_hp); // жизни
-    int hpW = image_hp.getWidth()*2;
-    int hpH = image_hp.getHeight()*2;
-    Rect image_hp1 = new Rect(30,30,hpW,hpH);
-
-    Sprite image_gun = new Sprite(gx, 1950, 0 , 0, BitmapFactory.decodeResource(getResources(),R.drawable.img_gun)); // сковородка
-//    Rect image_gun1 = new Rect(g,1750,image_gun.getWidth()+g,image_gun.getHeight()+1750);
-    Sprite image_cat = new Sprite(500, c,0,1300,BitmapFactory.decodeResource(getResources(),R.drawable.img_cat)); // catssss
-    Sprite img_fish = new Sprite(image_gun.getX(), 1860, 0, -1000, BitmapFactory.decodeResource(getResources(),R.drawable.img_fish));
-//    CatsSprite image_cat = new CatsSprite(500, c,0,1300,BitmapFactory.decodeResource(getResources(),R.drawable.img_cat));
-
     private Bitmap bitmap;
 
     public GameView(Context context) {
         super(context);
-//        Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.img);
-//        int w = b.getWidth()/5;
-//        int h = b.getHeight()/3;
-//        Rect firstFrame = new Rect(0, 0, w, h);
+        Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.img_fon);
+        gy = viewHeight;
         Timer t = new Timer();
         t.start();
         if (Hp==0){t.onFinish();}
     }
 
-
-
     @Override
     protected void onDraw(Canvas canvas) { // Рисование
+        image_gun.setY(viewHeight-200);
+
         super.onDraw(canvas);
-//        canvas.drawARGB(250, 127, 199, 255); // заливаем цветом
         Paint p = new Paint();
         canvas.drawBitmap(image1,null,new Rect(0,0,viewWidth,viewHeight),null);
         for (int i = 0; i != Hp; i++) {
@@ -80,16 +59,33 @@ public class GameView extends View {
                 e += hpW;
         }
         e = 0;
+        gy = viewHeight;
         p.setAntiAlias(true);
         p.setTextSize(70.0f);
         p.setColor(Color.WHITE);
         canvas.drawText(points+"", viewWidth - 100, 100, p); // счёт
         p.setTextSize(50.0f);
-        canvas.drawText(pointsmax+"",viewWidth - 100, 180, p); // рекорд
+        canvas.drawText(gy+"",viewWidth - 100, 180, p); // рекорд
         image_gun.draw(canvas);
         image_cat.draw(canvas);
         if (fish_a==1){img_fish.draw(canvas);}
     }
+
+    private Bitmap image1 = BitmapFactory.decodeResource(getResources(), R.drawable.img_fon); // фон
+
+
+    private Bitmap image_hp = BitmapFactory.decodeResource(getResources(), R.drawable.img_hp); // жизни
+    int hpW = image_hp.getWidth()*2;
+    int hpH = image_hp.getHeight()*2;
+    Rect image_hp1 = new Rect(30,30,hpW,hpH);
+
+    Sprite image_gun = new Sprite(gx, gy, 0 , 0, BitmapFactory.decodeResource(getResources(),R.drawable.img_gun)); // сковородка
+    //    Rect image_gun1 = new Rect(g,1750,image_gun.getWidth()+g,image_gun.getHeight()+1750);
+    Sprite image_cat = new Sprite(500, c,0,600,BitmapFactory.decodeResource(getResources(),R.drawable.img_cat)); // catssss
+    Sprite img_fish = new Sprite(image_gun.getX(), 1860, 0, -1000, BitmapFactory.decodeResource(getResources(),R.drawable.img_fish));
+//    CatsSprite image_cat = new CatsSprite(500, c,0,1300,BitmapFactory.decodeResource(getResources(),R.drawable.img_cat));
+
+
 
 
     class Timer extends CountDownTimer {
@@ -106,6 +102,7 @@ public class GameView extends View {
     }
 
     private void kill(){
+        img_fish = new Sprite(-1000, image_gun.getY(), 0, 0, BitmapFactory.decodeResource(getResources(),R.drawable.img_fish));
         fish_a = 0;
     }
 
@@ -118,7 +115,6 @@ public class GameView extends View {
             tp();
             points += 1;
             fish_a = 0;
-//            img_fish.draw();
         }
         if (image_cat.getY() > viewHeight) {
             tp ();
@@ -133,8 +129,9 @@ public class GameView extends View {
     public boolean onTouchEvent(MotionEvent event) {
         int eventAction = event.getAction();
         image_gun.setX(event.getX() - 150);
+
         fish_a = 1;
-        img_fish = new Sprite(image_gun.getX(), 1860, 0, -1000, BitmapFactory.decodeResource(getResources(),R.drawable.img_fish));
+        img_fish = new Sprite(image_gun.getX()+image_gun.getBx()/5, image_gun.getY(), 0, -1000, BitmapFactory.decodeResource(getResources(),R.drawable.img_fish));
         return true;
     }
 }

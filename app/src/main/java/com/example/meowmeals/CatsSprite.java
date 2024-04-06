@@ -14,7 +14,11 @@ public class CatsSprite extends Sprite{
         super(x,y,Vx,Vy,b);
         this.bitmap = b;
     }
-    public void draw(Canvas canvas){canvas.drawBitmap(bitmap, x, y-bitmap.getHeight(), paint);}
+    public Rect getBoundingBoxRect(){
+        return new Rect(this.x,this.y-bitmap.getHeight(),this.x+bitmap.getWidth(),this.y);
+    }
+    public void draw(Canvas canvas) {
+        canvas.drawBitmap(bitmap, x, y-bitmap.getHeight(), paint);
+    }
 
-    public void getRect(){return new Rect(this.x,this.y-bitmap.getHeight(),this.x+bitmap.getWidth(),this.y);}
 }
