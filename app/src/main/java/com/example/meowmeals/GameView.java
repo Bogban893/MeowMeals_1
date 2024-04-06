@@ -47,19 +47,20 @@ public class GameView extends View {
     int hpH = image_hp.getHeight()*2;
     Rect image_hp1 = new Rect(30,30,hpW,hpH);
 
-    private Sprite image_gun = new Sprite(gx, 1950, 0 , 0, BitmapFactory.decodeResource(getResources(),R.drawable.img_gun)); // сковородка
+    Sprite image_gun = new Sprite(gx, 1950, 0 , 0, BitmapFactory.decodeResource(getResources(),R.drawable.img_gun)); // сковородка
 //    Rect image_gun1 = new Rect(g,1750,image_gun.getWidth()+g,image_gun.getHeight()+1750);
-    private Sprite image_cat = new Sprite(500, c,0,1300,BitmapFactory.decodeResource(getResources(),R.drawable.img_cat)); // catssss
+    Sprite image_cat = new Sprite(500, c,0,1300,BitmapFactory.decodeResource(getResources(),R.drawable.img_cat)); // catssss
     Sprite img_fish = new Sprite(image_gun.getX(), 1860, 0, -1000, BitmapFactory.decodeResource(getResources(),R.drawable.img_fish));
+//    CatsSprite image_cat = new CatsSprite(500, c,0,1300,BitmapFactory.decodeResource(getResources(),R.drawable.img_cat));
 
     private Bitmap bitmap;
 
     public GameView(Context context) {
         super(context);
-        Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.img);
-        int w = b.getWidth()/5;
-        int h = b.getHeight()/3;
-        Rect firstFrame = new Rect(0, 0, w, h);
+//        Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.img);
+//        int w = b.getWidth()/5;
+//        int h = b.getHeight()/3;
+//        Rect firstFrame = new Rect(0, 0, w, h);
         Timer t = new Timer();
         t.start();
         if (Hp==0){t.onFinish();}
@@ -103,6 +104,7 @@ public class GameView extends View {
         image_cat.setX(Math.random()*(viewWidth - image_cat.getBx()));
         image_cat.setY(-500);
     }
+
     private void kill(){
         fish_a = 0;
     }
@@ -116,7 +118,7 @@ public class GameView extends View {
             tp();
             points += 1;
             fish_a = 0;
-            img_fish.update(timerInterval);
+//            img_fish.draw();
         }
         if (image_cat.getY() > viewHeight) {
             tp ();
