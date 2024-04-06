@@ -113,7 +113,7 @@ public class GameView extends View {
         invalidate();
         if (image_cat.intersect(img_fish)){
             tp();
-            points += 1;
+            points += 10;
             fish_a = 0;
         }
         if (image_cat.getY() > viewHeight) {
