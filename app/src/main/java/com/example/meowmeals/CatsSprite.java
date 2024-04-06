@@ -6,7 +6,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 
 public class CatsSprite extends Sprite{
-    private int x,y,Vx,Vy;
+    private int x,y,Vx,Vy ;
     private Bitmap bitmap;
     Paint paint = new Paint();
 
