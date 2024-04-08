@@ -8,12 +8,9 @@ import android.graphics.Rect;
 
 public class Sprite {
     private Bitmap bitmap;
-    private double x;
-    private double y;
-    private double velocityX;
-    private double velocityY;
+    private int x,y,velocityX,velocityY;
     private int padding;
-    public Sprite (double x, double y, double velocityX, double velocityY, Bitmap bitmap){
+    public Sprite (int x, int y, int velocityX, int velocityY, Bitmap bitmap){
         this.x=x;
         this.y=y;
         this.velocityX=velocityX;
@@ -21,31 +18,31 @@ public class Sprite {
         this.bitmap = bitmap;
         this.padding = 30;
     }
-    public void setX(double x) {
+    public void setX(int x) {
         this.x = x;
     }
-    public double getX(){
+    public int getX(){
         return x;
     }
-    public double getY() {
+    public int getY() {
         return y;
     }
-    public void setY(double y) {
+    public void setY(int y) {
         this.y = y;
     }
     public void setB(Bitmap b) {
         this.bitmap = b;
     }
-    public double getVx() {
+    public int getVx() {
         return velocityX;
     }
-    public void setVx(double velocityX) {
+    public void setVx(int velocityX) {
         this.velocityX = velocityX;
     }
-    public double getVy() {
+    public int getVy() {
         return velocityY;
     }
-    public void setVy(double velocityY) {
+    public void setVy(int velocityY) {
         this.velocityY = velocityY;
     }
     public int getBx() {
@@ -55,19 +52,25 @@ public class Sprite {
         return bitmap.getHeight();
     }
 
+
+
     public void update (int ms) {
-        x = x + velocityX * ms/1000.0;
-        y = y + velocityY * ms/1000.0;
+        x =  (x + velocityX * ms/1000);
+        y = y + velocityY * ms/1000;
     }
     public void draw (Canvas canvas) {
         Paint p = new Paint();
-        Rect destination = new Rect((int)x, (int)y, (int)(x + bitmap.getWidth()), (int)(y + bitmap.getHeight()));
-        canvas.drawBitmap(bitmap,null, destination,  p);
+//        Rect destination = new Rect((int)x, (int)y, (int)(x + bitmap.getWidth()), (int)(y + bitmap.getHeight()));
+        canvas.drawBitmap(bitmap, x, y,p);
     }
     public Rect getBoundingBoxRect () {
         return new Rect((int)x+padding, (int)y+padding, (int)(x + bitmap.getWidth() - 2 * padding), (int)(y + bitmap.getHeight() - 2 * padding));
     }
     public boolean intersect (Sprite s) {
         return getBoundingBoxRect().intersect(s.getBoundingBoxRect());
+    }
+    public void tp (){
+        this.x = (int) (Math.random()*(velocityY - velocityX));
+        this.y = (-500);
     }
 }
